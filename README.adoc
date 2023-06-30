@@ -1,4 +1,4 @@
-:spring_boot_version: 2.5.0
+:spring_boot_version: 3.1.1
 :spring-boot: https://github.com/spring-projects/spring-boot
 :icons: font
 :source-highlighter: prettify
@@ -64,7 +64,7 @@ You will see that the resulting project is downloaded as a ZIP file, and then un
 [[initial]]
 == Create a Simple Web Application
 
-Now you can create a web controller for a simple web application. Using the Editor tab to the right,
+Now you can create a web controller for a simple web application. Using the *Editor* tab to the right,
 create a new file `springboot/src/main/java/com/example/springboot/HelloController.java` containing the following content:
 
 ====
@@ -133,7 +133,7 @@ automatically added by Spring Boot. It sorts them and prints them out.
 
 == Run the Application
 
-To run the application, use the Editor:
+To run the application, use the *Editor*:
 
 . Find the `SpringbootApplication.java` file
 . Right-click and select the *Run Java* option in the context menu.
@@ -360,9 +360,19 @@ If you use Maven, add the following dependency to your `pom.xml` file:
 </dependency>
 ----
 
-Then restart the application. You can do this by using the Stop and Restart buttons in the dialog towards the top of the Editor:
+Then restart the application. This time, let's use the command line.
+First,stop the application using the Stop button (the red square) in the dialog towards the top of the Editor:
 
 image:images/editor-start-stop-dialog.png[]
+
+Now, in the *uppermost Terminal*, run the application as follows:
+
+====
+[source,text]
+----
+$ ./gradlew bootRun
+----
+====
 
 You should see that a new set of RESTful end points have been added to the application.
 These are management services provided by Spring Boot. The following listing shows typical
@@ -371,18 +381,45 @@ output:
 ====
 [source,text]
 ----
-management.endpoint.configprops-org.springframework.boot.actuate.autoconfigure.context.properties.ConfigurationPropertiesReportEndpointProperties
-management.endpoint.env-org.springframework.boot.actuate.autoconfigure.env.EnvironmentEndpointProperties
-management.endpoint.health-org.springframework.boot.actuate.autoconfigure.health.HealthEndpointProperties
-management.endpoint.logfile-org.springframework.boot.actuate.autoconfigure.logging.LogFileWebEndpointProperties
-management.endpoints.jmx-org.springframework.boot.actuate.autoconfigure.endpoint.jmx.JmxEndpointProperties
-management.endpoints.web-org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointProperties
-management.endpoints.web.cors-org.springframework.boot.actuate.autoconfigure.endpoint.web.CorsEndpointProperties
-management.health.diskspace-org.springframework.boot.actuate.autoconfigure.system.DiskSpaceHealthIndicatorProperties
-management.info-org.springframework.boot.actuate.autoconfigure.info.InfoContributorProperties
-management.metrics-org.springframework.boot.actuate.autoconfigure.metrics.MetricsProperties
-management.metrics.export.simple-org.springframework.boot.actuate.autoconfigure.metrics.export.simple.SimpleProperties
-management.server-org.springframework.boot.actuate.autoconfigure.web.server.ManagementServerProperties
+org.springframework.boot.actuate.autoconfigure.availability.AvailabilityHealthContributorAutoConfiguration
+org.springframework.boot.actuate.autoconfigure.availability.AvailabilityProbesAutoConfiguration
+org.springframework.boot.actuate.autoconfigure.endpoint.EndpointAutoConfiguration
+org.springframework.boot.actuate.autoconfigure.endpoint.jackson.JacksonEndpointAutoConfiguration
+org.springframework.boot.actuate.autoconfigure.endpoint.web.ServletEndpointManagementContextConfiguration
+org.springframework.boot.actuate.autoconfigure.endpoint.web.ServletEndpointManagementContextConfiguration$WebMvcServletEndpointManagementContextConfiguration
+org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointAutoConfiguration
+org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointAutoConfiguration$WebEndpointServletConfiguration
+org.springframework.boot.actuate.autoconfigure.endpoint.web.servlet.WebMvcEndpointManagementContextConfiguration
+org.springframework.boot.actuate.autoconfigure.health.HealthContributorAutoConfiguration
+org.springframework.boot.actuate.autoconfigure.health.HealthEndpointAutoConfiguration
+org.springframework.boot.actuate.autoconfigure.health.HealthEndpointConfiguration
+org.springframework.boot.actuate.autoconfigure.health.HealthEndpointWebExtensionConfiguration
+org.springframework.boot.actuate.autoconfigure.health.HealthEndpointWebExtensionConfiguration$MvcAdditionalHealthEndpointPathsConfiguration
+org.springframework.boot.actuate.autoconfigure.info.InfoContributorAutoConfiguration
+org.springframework.boot.actuate.autoconfigure.metrics.CompositeMeterRegistryAutoConfiguration
+org.springframework.boot.actuate.autoconfigure.metrics.JvmMetricsAutoConfiguration
+org.springframework.boot.actuate.autoconfigure.metrics.LogbackMetricsAutoConfiguration
+org.springframework.boot.actuate.autoconfigure.metrics.MetricsAutoConfiguration
+org.springframework.boot.actuate.autoconfigure.metrics.SystemMetricsAutoConfiguration
+org.springframework.boot.actuate.autoconfigure.metrics.export.simple.SimpleMetricsExportAutoConfiguration
+org.springframework.boot.actuate.autoconfigure.metrics.integration.IntegrationMetricsAutoConfiguration
+org.springframework.boot.actuate.autoconfigure.metrics.startup.StartupTimeMetricsListenerAutoConfiguration
+org.springframework.boot.actuate.autoconfigure.metrics.task.TaskExecutorMetricsAutoConfiguration
+org.springframework.boot.actuate.autoconfigure.metrics.web.tomcat.TomcatMetricsAutoConfiguration
+org.springframework.boot.actuate.autoconfigure.observation.ObservationAutoConfiguration
+org.springframework.boot.actuate.autoconfigure.observation.ObservationAutoConfiguration$MeterObservationHandlerConfiguration
+org.springframework.boot.actuate.autoconfigure.observation.ObservationAutoConfiguration$MeterObservationHandlerConfiguration$OnlyMetricsMeterObservationHandlerConfiguration
+org.springframework.boot.actuate.autoconfigure.observation.ObservationAutoConfiguration$OnlyMetricsConfiguration
+org.springframework.boot.actuate.autoconfigure.observation.web.client.HttpClientObservationsAutoConfiguration
+org.springframework.boot.actuate.autoconfigure.observation.web.client.HttpClientObservationsAutoConfiguration$MeterFilterConfiguration
+org.springframework.boot.actuate.autoconfigure.observation.web.client.RestTemplateObservationConfiguration
+org.springframework.boot.actuate.autoconfigure.observation.web.servlet.WebMvcObservationAutoConfiguration
+org.springframework.boot.actuate.autoconfigure.observation.web.servlet.WebMvcObservationAutoConfiguration$MeterFilterConfiguration
+org.springframework.boot.actuate.autoconfigure.system.DiskSpaceHealthContributorAutoConfiguration
+org.springframework.boot.actuate.autoconfigure.web.server.ManagementContextAutoConfiguration
+org.springframework.boot.actuate.autoconfigure.web.server.ManagementContextAutoConfiguration$SameManagementContextConfiguration
+org.springframework.boot.actuate.autoconfigure.web.server.ManagementContextAutoConfiguration$SameManagementContextConfiguration$EnableSameManagementContextConfiguration
+org.springframework.boot.actuate.autoconfigure.web.servlet.ServletManagementContextAutoConfiguration
 ----
 ====
 
@@ -398,13 +435,13 @@ and expose it with `management.endpoints.web.exposure.include=health,info,shutdo
 However, you probably should not enable the shutdown endpoint for a publicly available
 application.
 
-You can check the health of the application by running the following command:
+You can check the health of the application by running the following command in the *lower Terminal*:
 
 ====
 [source,bash]
 ----
-$ curl localhost:8080/actuator/health
-{"status":"UP"}
+$ curl http://localhost:8080/actuator/health
+{"status":"UP","groups":["liveness","readiness"]}
 ----
 ====
 
@@ -415,7 +452,7 @@ added the necessary line (shown in the preceding note) to `application.propertie
 [source,bash]
 ----
 $ curl -X POST localhost:8080/actuator/shutdown
-{"timestamp":1401820343710,"error":"Not Found","status":404,"message":"","path":"/actuator/shutdown"}
+{"timestamp":"2023-06-30T20:24:25.564+00:00","status":404,"error":"Not Found","path":"/actuator/shutdown"}
 ----
 ====
 
@@ -433,7 +470,7 @@ http://docs.spring.io/spring-boot/docs/{spring_boot_version}/reference/htmlsingl
 You can see them all
 https://github.com/spring-projects/spring-boot/tree/main/spring-boot-project/spring-boot-starters[here in source code].
 
-== JAR Support and Groovy Support
+== JAR Support
 
 The last example showed how Spring Boot lets you wire beans that you may not be aware you
 need. It also showed how to turn on convenient management services.
